@@ -13,10 +13,7 @@
     "windows": [
       {
         "title": "Lares",
-        "width": 900,
-        "height": 800,
-        "minWidth": 600,
-        "minHeight": 400,
+        "maximized": true,
         "resizable": true,
         "decorations": true,
         "titleBarStyle": "Overlay",
