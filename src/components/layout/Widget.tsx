@@ -41,8 +41,8 @@ export default function Widget({
         }
       }}
       className={cn(
-        "bg-foreground/5 hover:bg-foreground/8 text-foreground flex cursor-pointer flex-col items-start justify-between gap-4 rounded-xl p-8 transition-colors duration-300 outline-none",
-        isActive && "cursor-default col-span-3",
+        "bg-foreground/5 hover:bg-foreground/8 text-foreground flex cursor-pointer flex-col items-start justify-between gap-4 rounded-xl p-6 transition-colors duration-300 outline-none",
+        isActive && "col-span-3 cursor-default",
       )}
     >
       {render ? (
@@ -51,11 +51,11 @@ export default function Widget({
         <>
           {!isActive && (
             <>
-              <div className="flex size-12 items-center justify-center">
+              <div className="flex size-10 items-center justify-center">
                 {icon}
               </div>
               <div>
-                <Text className="text-2xl font-medium">{label}</Text>
+                <Text className="text-lg font-medium">{label}</Text>
               </div>
             </>
           )}

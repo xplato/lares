@@ -41,7 +41,7 @@ export default function WidgetGroup({ children }: PropsWithChildren) {
 
   return (
     <WidgetGroupContext.Provider value={value}>
-      <div ref={parent} className="grid grid-cols-3 gap-4">
+      <div ref={parent} className="grid grid-cols-8 gap-4">
         {children}
       </div>
     </WidgetGroupContext.Provider>

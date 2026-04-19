@@ -1,7 +1,8 @@
 import { CheckIcon, PauseIcon, PlayIcon, TimerIcon, XIcon } from "lucide-react";
 
-import Card from "@/components/layout/Card";
 import { Button } from "@/components/ui/button";
+import { Progress } from "@/components/ui/progress";
+import { Text } from "@/components/ui/text";
 import {
   getRemainingMs,
   isCompleted,
@@ -23,11 +24,6 @@ function formatRemaining(ms: number): string {
   return `${minutes}:${seconds.toString().padStart(2, "0")}`;
 }
 
-function formatDurationLabel(ms: number): string {
-  const minutes = Math.round(ms / 60_000);
-  return `${minutes} min timer`;
-}
-
 export default function ActiveTimerCard({ timer }: Props) {
   const remaining = getRemainingMs(timer);
   const completed = isCompleted(timer);
@@ -37,78 +33,65 @@ export default function ActiveTimerCard({ timer }: Props) {
     Math.max(0, 1 - remaining / timer.durationMs),
   );
 
-  const status = completed
-    ? "Time's up"
-    : paused
-      ? "Paused"
-      : formatDurationLabel(timer.durationMs);
-
   return (
     <div
       className={cn(
-        "rounded-xl transition-colors duration-700",
+        "bg-foreground/5 flex h-full flex-col gap-4 rounded-xl p-6 transition-colors duration-700",
         completed && "bg-emerald-500/10",
       )}
     >
-      <Card
-        title={completed ? "Done" : formatRemaining(remaining)}
-        subtitle={status}
-        lowerMetaContent={
-          <div className="flex flex-wrap items-center gap-2">
-            {completed ? (
-              <Button
-                variant="default"
-                onClick={() => removeTimer(timer.id)}
-              >
-                <CheckIcon />
-                Dismiss
-              </Button>
-            ) : (
-              <>
-                <Button
-                  variant="secondary"
-                  onClick={() =>
-                    paused ? resumeTimer(timer.id) : pauseTimer(timer.id)
-                  }
-                >
-                  {paused ? <PlayIcon /> : <PauseIcon />}
-                  {paused ? "Resume" : "Pause"}
-                </Button>
-                <Button
-                  variant="ghost"
-                  onClick={() => removeTimer(timer.id)}
-                >
-                  <XIcon />
-                  Cancel
-                </Button>
-              </>
-            )}
-          </div>
-        }
-      >
-        <div
+      <div className="flex items-center gap-3">
+        <TimerIcon
           className={cn(
-            "relative flex h-76 items-center justify-center overflow-hidden rounded-xl transition-colors duration-700",
-            completed ? "bg-emerald-500/20" : "bg-foreground/5",
+            "size-5 shrink-0 transition-colors duration-700",
+            completed
+              ? "text-emerald-700 dark:text-emerald-400"
+              : "text-foreground/40",
           )}
-        >
-          <div
-            className={cn(
-              "absolute inset-x-0 bottom-0 transition-all duration-500",
-              completed ? "bg-emerald-500/30" : "bg-foreground/5",
-            )}
-            style={{ height: `${progress * 100}%` }}
-          />
-          <TimerIcon
-            className={cn(
-              "relative size-24 transition-colors duration-700",
-              completed
-                ? "text-emerald-700 dark:text-emerald-400"
-                : "text-foreground/40",
-            )}
-          />
-        </div>
-      </Card>
+        />
+        <Text className="text-2xl font-medium tabular-nums">
+          {completed ? "Done" : formatRemaining(remaining)}
+        </Text>
+      </div>
+
+      <Progress
+        value={progress * 100}
+        className={cn("h-1.5", completed && "[&_[data-slot=progress-indicator]]:bg-emerald-500")}
+      />
+
+      <div className="flex items-center gap-2">
+        {completed ? (
+          <Button
+            variant="default"
+            size="sm"
+            onClick={() => removeTimer(timer.id)}
+          >
+            <CheckIcon />
+            Dismiss
+          </Button>
+        ) : (
+          <>
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() =>
+                paused ? resumeTimer(timer.id) : pauseTimer(timer.id)
+              }
+            >
+              {paused ? <PlayIcon /> : <PauseIcon />}
+              {paused ? "Resume" : "Pause"}
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => removeTimer(timer.id)}
+            >
+              <XIcon />
+              Cancel
+            </Button>
+          </>
+        )}
+      </div>
     </div>
   );
 }
