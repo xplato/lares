@@ -1,5 +1,4 @@
 import { useId } from "react";
-import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
@@ -29,11 +28,8 @@ export default function Widget({
 
   if (isHidden) return null;
 
-  // Render as motion.div (not button) so children can host interactive
-  // elements like the timer keypad without nesting buttons.
   return (
-    <motion.div
-      layout
+    <div
       onClick={() => toggle(id)}
       role="button"
       tabIndex={0}
@@ -44,13 +40,8 @@ export default function Widget({
           toggle(id);
         }
       }}
-      initial={{ opacity: 0, scale: 0.95 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 400, damping: 36 }}
-      style={{ borderRadius: 12, overflow: "hidden" }}
       className={cn(
-        "bg-foreground/5 hover:bg-foreground/8 text-foreground flex cursor-pointer flex-col items-start justify-between gap-4 p-8 transition-colors duration-300 outline-none",
+        "bg-foreground/5 hover:bg-foreground/8 text-foreground flex cursor-pointer flex-col items-start justify-between gap-4 rounded-xl p-8 transition-colors duration-300 outline-none",
         isActive && "cursor-default col-span-3",
       )}
     >
@@ -74,6 +65,6 @@ export default function Widget({
           )}
         </>
       )}
-    </motion.div>
+    </div>
   );
 }

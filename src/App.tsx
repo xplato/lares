@@ -105,48 +105,30 @@ function AppContent() {
                     <ActiveTimerCard timer={t} />
                   </motion.div>
                 ))}
-                <motion.div
-                  key="inbox"
-                  layout="position"
-                  initial={ITEM_INITIAL}
-                  animate={ITEM_ANIMATE}
-                  exit={ITEM_EXIT}
-                  transition={LAYOUT_TRANSITION}
-                >
-                  <Card
-                    title="Review inbox"
-                    subtitle="Updated just now"
-                    upperMetaContent={"hi"}
-                    lowerMetaContent={"bye"}
-                  >
-                    <div className="bg-foreground/5 h-76 rounded-xl"></div>
-                  </Card>
-                </motion.div>
-                <motion.div
-                  key="widgets"
-                  layout="position"
-                  initial={ITEM_INITIAL}
-                  animate={ITEM_ANIMATE}
-                  exit={ITEM_EXIT}
-                  transition={LAYOUT_TRANSITION}
-                >
-                  <WidgetGroup>
-                    <Widget
-                      icon={<TimerIcon className="size-full" />}
-                      label="Timer"
-                    >
-                      <CreateTimerWidget />
-                    </Widget>
-                    <Widget
-                      icon={null}
-                      label="Weather"
-                      render={(isActive) => (
-                        <WeatherWidget isActive={isActive} />
-                      )}
-                    />
-                  </WidgetGroup>
-                </motion.div>
               </AnimatePresence>
+              <Card
+                title="Review inbox"
+                subtitle="Updated just now"
+                upperMetaContent={"hi"}
+                lowerMetaContent={"bye"}
+              >
+                <div className="bg-foreground/5 h-76 rounded-xl"></div>
+              </Card>
+              <WidgetGroup>
+                <Widget
+                  icon={<TimerIcon className="size-full" />}
+                  label="Timer"
+                >
+                  <CreateTimerWidget />
+                </Widget>
+                <Widget
+                  icon={null}
+                  label="Weather"
+                  render={(isActive) => (
+                    <WeatherWidget isActive={isActive} />
+                  )}
+                />
+              </WidgetGroup>
             </div>
           </Section>
         </div>

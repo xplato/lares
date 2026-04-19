@@ -6,7 +6,7 @@ import {
   useMemo,
   useState,
 } from "react";
-import { AnimatePresence, LayoutGroup } from "motion/react";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 interface WidgetGroupContextValue {
   activeId: string | null;
@@ -26,6 +26,7 @@ export function useWidgetGroup() {
 
 export default function WidgetGroup({ children }: PropsWithChildren) {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [parent] = useAutoAnimate({ duration: 200, easing: "ease-out" });
 
   const toggle = useCallback((id: string) => {
     setActiveId((current) => (current === id ? null : id));
@@ -40,13 +41,9 @@ export default function WidgetGroup({ children }: PropsWithChildren) {
 
   return (
     <WidgetGroupContext.Provider value={value}>
-      <LayoutGroup>
-        <div className="grid grid-cols-3 gap-4">
-          <AnimatePresence mode="popLayout" initial={false}>
-            {children}
-          </AnimatePresence>
-        </div>
-      </LayoutGroup>
+      <div ref={parent} className="grid grid-cols-3 gap-4">
+        {children}
+      </div>
     </WidgetGroupContext.Provider>
   );
 }
