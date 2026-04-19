@@ -1,10 +1,14 @@
-import { PropsWithChildren, useId } from "react";
+import { useId } from "react";
 import { motion } from "motion/react";
 
 import { cn } from "@/lib/utils";
 
 import { Text } from "../ui/text";
 import { useWidgetGroup } from "./WidgetGroup";
+
+type ChildrenOrRender =
+  | { children?: React.ReactNode; render?: never }
+  | { children?: never; render: (isActive: boolean) => React.ReactNode };
 
 interface Props {
   icon: React.ReactNode;
@@ -15,7 +19,8 @@ export default function Widget({
   icon,
   label,
   children,
-}: PropsWithChildren<Props>) {
+  render,
+}: Props & ChildrenOrRender) {
   const id = useId();
   const { activeId, toggle } = useWidgetGroup();
 
@@ -49,17 +54,25 @@ export default function Widget({
         isActive && "cursor-default col-span-3",
       )}
     >
-      {!isActive && (
+      {render ? (
+        render(isActive)
+      ) : (
         <>
-          <div className="flex size-12 items-center justify-center">{icon}</div>
-          <div>
-            <Text className="text-2xl font-medium">{label}</Text>
-          </div>
-        </>
-      )}
+          {!isActive && (
+            <>
+              <div className="flex size-12 items-center justify-center">
+                {icon}
+              </div>
+              <div>
+                <Text className="text-2xl font-medium">{label}</Text>
+              </div>
+            </>
+          )}
 
-      {isActive && children && (
-        <div className="w-full cursor-default">{children}</div>
+          {isActive && children && (
+            <div className="w-full cursor-default">{children}</div>
+          )}
+        </>
       )}
     </motion.div>
   );

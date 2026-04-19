@@ -17,7 +17,7 @@ import CreateTimerWidget from "./components/widgets/CreateTimerWidget";
 import useDynamicBackground from "./hooks/useDynamicBackground";
 import useTimers from "./hooks/useTimers";
 import { isCompleted } from "./lib/timers";
-import WeatherCard from "./modules/weather/WeatherCard";
+import WeatherWidget from "./modules/weather/WeatherWidget";
 
 const LAYOUT_TRANSITION = { type: "spring", stiffness: 380, damping: 36 } as const;
 const ITEM_INITIAL = { opacity: 0, scale: 0.95 };
@@ -137,14 +137,16 @@ function AppContent() {
                     >
                       <CreateTimerWidget />
                     </Widget>
+                    <Widget
+                      icon={null}
+                      label="Weather"
+                      render={(isActive) => (
+                        <WeatherWidget isActive={isActive} />
+                      )}
+                    />
                   </WidgetGroup>
                 </motion.div>
               </AnimatePresence>
-            </div>
-          </Section>
-          <Section title="Weather">
-            <div className="grid grid-cols-2 gap-8">
-              <WeatherCard />
             </div>
           </Section>
         </div>
