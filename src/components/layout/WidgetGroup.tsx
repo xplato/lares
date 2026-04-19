@@ -11,6 +11,7 @@ import { AnimatePresence, LayoutGroup } from "motion/react";
 interface WidgetGroupContextValue {
   activeId: string | null;
   toggle: (id: string) => void;
+  deactivate: () => void;
 }
 
 const WidgetGroupContext = createContext<WidgetGroupContextValue | null>(null);
@@ -30,12 +31,17 @@ export default function WidgetGroup({ children }: PropsWithChildren) {
     setActiveId((current) => (current === id ? null : id));
   }, []);
 
-  const value = useMemo(() => ({ activeId, toggle }), [activeId, toggle]);
+  const deactivate = useCallback(() => setActiveId(null), []);
+
+  const value = useMemo(
+    () => ({ activeId, toggle, deactivate }),
+    [activeId, toggle, deactivate],
+  );
 
   return (
     <WidgetGroupContext.Provider value={value}>
       <LayoutGroup>
-        <div className="grid grid-cols-3 grid-rows-2 gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <AnimatePresence mode="popLayout" initial={false}>
             {children}
           </AnimatePresence>

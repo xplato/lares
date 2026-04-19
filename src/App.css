@@ -5,6 +5,24 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@property --bg-stop-1 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(213, 207, 206, 1);
+}
+
+@property --bg-stop-2 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(207, 197, 198, 1);
+}
+
+@property --bg-stop-3 {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgba(170, 178, 187, 1);
+}
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -39,15 +57,29 @@
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
 
-  --body-background-color: #d5cfce;
-  --body-background-gradient: linear-gradient(
-    90deg,
-    rgba(213, 207, 206, 1) 0%,
-    rgba(207, 197, 198, 1) 35%,
-    rgba(170, 178, 187, 1) 100%
-  );
+  --bg-stop-1: rgba(213, 207, 206, 1);
+  --bg-stop-2: rgba(207, 197, 198, 1);
+  --bg-stop-3: rgba(170, 178, 187, 1);
 
   --lares-secondary: #e0dcda;
+}
+
+:root[data-bg-mode="success"] {
+  --bg-stop-1: rgba(213, 220, 207, 1);
+  --bg-stop-2: rgba(196, 215, 197, 1);
+  --bg-stop-3: rgba(160, 195, 175, 1);
+}
+
+:root[data-bg-mode="warning"] {
+  --bg-stop-1: rgba(228, 218, 198, 1);
+  --bg-stop-2: rgba(222, 205, 178, 1);
+  --bg-stop-3: rgba(210, 178, 138, 1);
+}
+
+:root[data-bg-mode="error"] {
+  --bg-stop-1: rgba(222, 207, 207, 1);
+  --bg-stop-2: rgba(216, 195, 198, 1);
+  --bg-stop-3: rgba(195, 165, 172, 1);
 }
 
 .dark {
@@ -83,15 +115,29 @@
   --sidebar-border: oklch(1 0 0 / 10%);
   --sidebar-ring: oklch(0.556 0 0);
 
-  --body-background-color: #1a1918;
-  --body-background-gradient: linear-gradient(
-    90deg,
-    rgba(26, 25, 24, 1) 0%,
-    rgba(30, 26, 28, 1) 35%,
-    rgba(24, 30, 38, 1) 100%
-  );
+  --bg-stop-1: rgba(26, 25, 24, 1);
+  --bg-stop-2: rgba(30, 26, 28, 1);
+  --bg-stop-3: rgba(24, 30, 38, 1);
 
   --lares-secondary: #292827;
+}
+
+.dark[data-bg-mode="success"] {
+  --bg-stop-1: rgba(22, 28, 23, 1);
+  --bg-stop-2: rgba(24, 34, 28, 1);
+  --bg-stop-3: rgba(22, 42, 32, 1);
+}
+
+.dark[data-bg-mode="warning"] {
+  --bg-stop-1: rgba(30, 26, 22, 1);
+  --bg-stop-2: rgba(36, 30, 22, 1);
+  --bg-stop-3: rgba(46, 36, 22, 1);
+}
+
+.dark[data-bg-mode="error"] {
+  --bg-stop-1: rgba(28, 22, 22, 1);
+  --bg-stop-2: rgba(34, 24, 26, 1);
+  --bg-stop-3: rgba(42, 22, 28, 1);
 }
 
 @theme inline {
@@ -163,8 +209,16 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background: var(--body-background-color);
-  background: var(--body-background-gradient);
+  background: linear-gradient(
+    90deg,
+    var(--bg-stop-1) 0%,
+    var(--bg-stop-2) 35%,
+    var(--bg-stop-3) 100%
+  );
+  transition:
+    --bg-stop-1 700ms ease,
+    --bg-stop-2 700ms ease,
+    --bg-stop-3 700ms ease;
 }
 
 /* macOS transparent title bar support */
