@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import store from "@/lib/store";
 
 export default function Theme() {
-  const [theme, setTheme] = useState<string>("system");
+  const [theme, setTheme] = useState<string>("dark");
   const [loading, setLoading] = useState(true);
 
   const [systemTheme, setSystemTheme] = useState<"light" | "dark">(() => {
