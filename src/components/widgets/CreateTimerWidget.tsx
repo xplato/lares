@@ -1,18 +1,25 @@
 import { useState } from "react";
-import { CheckIcon, DeleteIcon } from "lucide-react";
-
 import { useWidgetGroup } from "@/components/layout/WidgetGroup";
 import { Text } from "@/components/ui/text";
 import { createTimer } from "@/lib/timers";
 import { cn } from "@/lib/utils";
+import { CheckIcon, DeleteIcon } from "lucide-react";
 
 type Key = string;
 
 const KEYS: Key[] = [
-  "1", "2", "3",
-  "4", "5", "6",
-  "7", "8", "9",
-  "delete", "0", "enter",
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "delete",
+  "0",
+  "enter",
 ];
 
 const MAX_DIGITS = 4;
@@ -44,7 +51,7 @@ export default function CreateTimerWidget() {
       <div className="flex items-baseline justify-center gap-2">
         <Text
           className={cn(
-            "text-6xl font-medium tabular-nums tracking-tight transition-opacity",
+            "text-5xl font-medium tracking-tight tabular-nums transition-opacity",
             value.length === 0 && "opacity-30",
           )}
         >
@@ -62,7 +69,10 @@ export default function CreateTimerWidget() {
             <button
               key={k}
               type="button"
-              onClick={() => press(k)}
+              onClick={(e) => {
+                e.stopPropagation();
+                press(k);
+              }}
               disabled={disabled}
               className={cn(
                 "bg-foreground/5 hover:bg-foreground/10 active:bg-foreground/15 flex h-14 items-center justify-center rounded-lg text-2xl font-medium tabular-nums transition-colors disabled:cursor-not-allowed disabled:opacity-40",

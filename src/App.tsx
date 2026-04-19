@@ -2,7 +2,7 @@ import "./App.css";
 
 import { useCallback, useEffect, useState } from "react";
 import { BoltIcon, TimerIcon } from "lucide-react";
-import { AnimatePresence, LayoutGroup, motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import { Toaster } from "sonner";
 
 import Card from "./components/layout/Card";
@@ -91,57 +91,56 @@ function AppContent() {
       <div className="flex-1 overflow-auto p-12 pt-24">
         <div className="flex flex-col items-start justify-start gap-32">
           <Section title="Today">
-            <LayoutGroup id="today-grid">
-              <motion.div layout className="grid grid-cols-2 gap-8">
-                <AnimatePresence mode="popLayout" initial={false}>
-                  {timers.map((t) => (
-                    <motion.div
-                      key={t.id}
-                      layout
-                      initial={ITEM_INITIAL}
-                      animate={ITEM_ANIMATE}
-                      exit={ITEM_EXIT}
-                      transition={LAYOUT_TRANSITION}
-                    >
-                      <ActiveTimerCard timer={t} />
-                    </motion.div>
-                  ))}
+            <div className="grid grid-cols-2 gap-8">
+              <AnimatePresence mode="popLayout" initial={false}>
+                {timers.map((t) => (
                   <motion.div
-                    key="inbox"
-                    layout
+                    key={t.id}
+                    layout="position"
                     initial={ITEM_INITIAL}
                     animate={ITEM_ANIMATE}
                     exit={ITEM_EXIT}
                     transition={LAYOUT_TRANSITION}
                   >
-                    <Card
-                      title="Review inbox"
-                      subtitle="Updated just now"
-                      upperMetaContent={"hi"}
-                      lowerMetaContent={"bye"}
-                    >
-                      <div className="bg-foreground/5 h-76 rounded-xl"></div>
-                    </Card>
+                    <ActiveTimerCard timer={t} />
                   </motion.div>
-                  <motion.div
-                    key="widgets"
-                    initial={ITEM_INITIAL}
-                    animate={ITEM_ANIMATE}
-                    exit={ITEM_EXIT}
-                    transition={LAYOUT_TRANSITION}
+                ))}
+                <motion.div
+                  key="inbox"
+                  layout="position"
+                  initial={ITEM_INITIAL}
+                  animate={ITEM_ANIMATE}
+                  exit={ITEM_EXIT}
+                  transition={LAYOUT_TRANSITION}
+                >
+                  <Card
+                    title="Review inbox"
+                    subtitle="Updated just now"
+                    upperMetaContent={"hi"}
+                    lowerMetaContent={"bye"}
                   >
-                    <WidgetGroup>
-                      <Widget
-                        icon={<TimerIcon className="size-full" />}
-                        label="Timer"
-                      >
-                        <CreateTimerWidget />
-                      </Widget>
-                    </WidgetGroup>
-                  </motion.div>
-                </AnimatePresence>
-              </motion.div>
-            </LayoutGroup>
+                    <div className="bg-foreground/5 h-76 rounded-xl"></div>
+                  </Card>
+                </motion.div>
+                <motion.div
+                  key="widgets"
+                  layout="position"
+                  initial={ITEM_INITIAL}
+                  animate={ITEM_ANIMATE}
+                  exit={ITEM_EXIT}
+                  transition={LAYOUT_TRANSITION}
+                >
+                  <WidgetGroup>
+                    <Widget
+                      icon={<TimerIcon className="size-full" />}
+                      label="Timer"
+                    >
+                      <CreateTimerWidget />
+                    </Widget>
+                  </WidgetGroup>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </Section>
           <Section title="Weather">
             <div className="grid grid-cols-2 gap-8">

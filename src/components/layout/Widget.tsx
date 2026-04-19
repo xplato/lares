@@ -29,20 +29,16 @@ export default function Widget({
   return (
     <motion.div
       layout
-      onClick={isActive ? undefined : () => toggle(id)}
-      role={isActive ? undefined : "button"}
-      tabIndex={isActive ? undefined : 0}
-      onKeyDown={
-        isActive
-          ? undefined
-          : (e) => {
-              if (e.target !== e.currentTarget) return;
-              if (e.key === "Enter" || e.key === " ") {
-                e.preventDefault();
-                toggle(id);
-              }
-            }
-      }
+      onClick={() => toggle(id)}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.target !== e.currentTarget) return;
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          toggle(id);
+        }
+      }}
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
@@ -63,12 +59,7 @@ export default function Widget({
       )}
 
       {isActive && children && (
-        <div
-          onClick={(e) => e.stopPropagation()}
-          className="w-full cursor-default"
-        >
-          {children}
-        </div>
+        <div className="w-full cursor-default">{children}</div>
       )}
     </motion.div>
   );
